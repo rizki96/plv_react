@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { AddTodoForm } from "./add_todo_form";
 import { TodoList } from "./todo_list";
 import { Todo, AddTodo, ToggleComplete } from "./types";
@@ -13,11 +13,16 @@ interface LiveViewProps {
     handleEvent: any;
 }
 
-const Todo: React.FC<LiveViewProps> = (props: LiveViewProps) => {
-    const { name, todos, pushEvent, pushEventTo, handleEvent } = props;
+const Todo: React.FC<LiveViewProps> = ({ 
+    name, 
+    todos, 
+    pushEvent, 
+    pushEventTo, 
+    handleEvent 
+}: LiveViewProps) => {
 
     useEffect(() => {
-        console.log("refreshTodos")
+        console.log("init_todos")
         console.log(todos)
     }, [])
 

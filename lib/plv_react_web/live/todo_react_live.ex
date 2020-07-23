@@ -9,7 +9,7 @@ defmodule PlvReactWeb.TodoReactLive do
     @impl true
     def render(assigns) do
         ~L"""
-        <%= live_react_component("Components.Todo", %{name: @name, todos: @todos}, id: "todo-component-1", merge_props: true) %>
+        <%= live_react_component("Components.Todo", %{name: @name, todos: @todos}, id: "todo-react-1", merge_props: true) %>
         """
     end
 
@@ -18,7 +18,7 @@ defmodule PlvReactWeb.TodoReactLive do
         # read todos from database
         todos = Tasks.list_task_todos
 
-        {:ok, socket |> assign(name: "react_com", todos: todos)}
+        {:ok, socket |> assign(name: "react_component", todos: todos)}
     end
 
     @impl true
