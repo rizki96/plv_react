@@ -1,6 +1,5 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { useEffect } from 'react';
 import { AddTodoForm } from "./add_todo_form";
 import { TodoList } from "./todo_list";
 import { Todo, AddTodo, ToggleComplete } from "./types";
@@ -21,12 +20,12 @@ const Todo: React.FC<LiveViewProps> = ({
     handleEvent 
 }: LiveViewProps) => {
 
-    useEffect(() => {
+    React.useEffect(() => {
         console.log("init_todos")
         console.log(todos)
     }, [])
 
-    useEffect(() => {
+    React.useEffect(() => {
         if (!handleEvent) return;
         handleEvent("add_todo_result", (data) => {
             // use data to update your component
@@ -35,7 +34,7 @@ const Todo: React.FC<LiveViewProps> = ({
         })
     }, [handleEvent])
 
-    useEffect(() => {
+    React.useEffect(() => {
         if (!todos) return
         console.log("todos")
         console.log(todos)
