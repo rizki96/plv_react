@@ -1,0 +1,34 @@
+defmodule PlvReact.Application do
+  # See https://hexdocs.pm/elixir/Application.html
+  # for more information on OTP Applications
+  @moduledoc false
+
+  use Application
+
+  def start(_type, _args) do
+    children = [
+      # Start the Ecto repository
+      PlvReact.Repo,
+      # Start the Telemetry supervisor
+      PlvReactWeb.Telemetry,
+      # Start the PubSub system
+      {Phoenix.PubSub, name: PlvReact.PubSub},
+      # Start the Endpoint (http/https)
+      PlvReactWeb.Endpoint
+      # Start a worker by calling: PlvReact.Worker.start_link(arg)
+      # {PlvReact.Worker, arg}
+    ]
+
+    # See https://hexdocs.pm/elixir/Supervisor.html
+    # for other strategies and supported options
+    opts = [strategy: :one_for_one, name: PlvReact.Supervisor]
+    Supervisor.start_link(children, opts)
+  end
+
+  # Tell Phoenix to update the endpoint configuration
+  # whenever the application is updated.
+  def config_change(changed, _new, removed) do
+    PlvReactWeb.Endpoint.config_change(changed, removed)
+    :ok
+  end
+end
