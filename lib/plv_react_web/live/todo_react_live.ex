@@ -37,7 +37,7 @@ defmodule PlvReactWeb.TodoReactLive do
             {:ok, t} -> t
             {:error, _} -> nil
         end
-        Process.send_after(self(), :refresh_todos, 1000)
+        Process.send_after(self(), :refresh_todos, 0)
 
         {:noreply, socket |> push_event("add_todo_result", %{add_todo: todo})}
     end
