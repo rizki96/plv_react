@@ -17,9 +17,9 @@ import {Socket} from "phoenix"
 import NProgress from "nprogress"
 import {LiveSocket} from "phoenix_live_view"
 import LiveReact, { initLiveReact } from "phoenix_live_react"
-import AddTodoHook from './add_todo_hook'
+import TodoListItemHook from './todo_list_item_hook'
 
-let hooks = { LiveReact, AddTodoHook }
+let hooks = { LiveReact, TodoListItemHook }
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 let liveSocket = new LiveSocket("/live", Socket, {hooks, params: {_csrf_token: csrfToken}})

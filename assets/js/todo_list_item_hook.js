@@ -1,11 +1,10 @@
-const AddTodoHook = {
+const TodoListItemHook = {
     mounted() {
         console.log("mounted");
         $('#todo_text').val('');
-    }/*,
+    },
     updated() {
-        console.log("updated");
-    }*/
+    }
 }
 
-export default AddTodoHook;
+export default TodoListItemHook;
