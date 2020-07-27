@@ -1,7 +1,7 @@
 <%= if @name == "react" do %>
-    <%= live_render(@conn, PlvReactWeb.TodoReactLive, session: %{}) %>
+    <%= live_render(@conn, PlvReactWeb.TodoReactLive, id: "react-1", session: %{}) %>
 <% else %>
     <%= if @name == "liveview" do %>
-        <%= live_render(@conn, PlvReactWeb.TodoLiveviewLive, session: %{}) %>
+        <%= live_render(@conn, PlvReactWeb.TodoLiveviewLive, id: "liveview-1", session: %{}) %>
     <% end %>
 <% end %>

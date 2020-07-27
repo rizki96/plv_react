@@ -17,13 +17,16 @@ import {Socket} from "phoenix"
 import NProgress from "nprogress"
 import {LiveSocket} from "phoenix_live_view"
 import LiveReact, { initLiveReact } from "phoenix_live_react"
+import AddTodoHook from './add_todo_hook'
 
-let hooks = { LiveReact }
+let hooks = { LiveReact, AddTodoHook }
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 let liveSocket = new LiveSocket("/live", Socket, {hooks, params: {_csrf_token: csrfToken}})
 
 import Todo from './components/todos/todo'
+//import AddTodoForm from './components/todos/add_todo_form'
+//import TodoListItem from './components/todos/todo_list_item'
 
 window.Components = {
     Todo

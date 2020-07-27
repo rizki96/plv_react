@@ -17,8 +17,12 @@ defmodule PlvReactWeb.TodoReactLive do
     def mount(_params, _session, socket) do
         # read todos from database
         todos = Tasks.list_task_todos
+        socket = socket 
+        |> assign(name: "react_component")
+        |> assign(todos: todos)
 
-        {:ok, socket |> assign(name: "react_component", todos: todos)}
+        #{:ok, socket, temporary_assigns: [todos: []]}
+        {:ok, socket}
     end
 
     @impl true
@@ -37,7 +41,7 @@ defmodule PlvReactWeb.TodoReactLive do
             {:ok, t} -> t
             {:error, _} -> nil
         end
-        Process.send_after(self(), :refresh_todos, 0)
+        #Process.send_after(self(), :refresh_todos, 0)
 
         {:noreply, socket |> push_event("add_todo_result", %{add_todo: todo})}
     end
@@ -45,17 +49,18 @@ defmodule PlvReactWeb.TodoReactLive do
     @impl true
     def handle_event("update_todo", params, %{assigns: %{todos: todos}} = socket) do
         Logger.log(:debug, "#{inspect params}")
+
         old_todo = Tasks.get_todo!(params["id"])
-        todos =
+        todo =
         if old_todo do
             case Tasks.update_todo(old_todo, params) do
-                {:ok, _} -> Tasks.list_task_todos
-                {:error, _} -> todos
+                {:ok, t} -> t
+                {:error, _} -> nil
             end
         else
-            todos
+            nil
         end
-        
-        {:noreply, socket |> assign(:todos, todos)}
+
+        {:noreply, socket |> push_event("update_todo_result", %{update_todo: todo})}
     end
 end
