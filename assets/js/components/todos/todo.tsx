@@ -21,15 +21,15 @@ const Todo: React.FC<LiveViewProps> = ({
 }: LiveViewProps) => {
     const [getTodos, setTodos] = React.useState<Array<Todo>>(todos);
 
-    const mounted = React.useRef(todos);
+    const refTodos = React.useRef(todos);
     
     React.useEffect(() => {
-        if (!mounted.current) {
+        if (!refTodos.current) {
             // do componentDidMount logic
-            mounted.current = getTodos;
+            refTodos.current = getTodos;
         } else {
             // do componentDidUpdate logic
-            mounted.current = getTodos;
+            refTodos.current = getTodos;
         }
     });
 
@@ -44,13 +44,13 @@ const Todo: React.FC<LiveViewProps> = ({
             // use data to update your component
             console.log("add_todo_result")
             console.log(data.add_todo.id, data.add_todo.completed)
-            setTodos(mounted.current.concat([data.add_todo]))
+            setTodos(refTodos.current.concat([data.add_todo]))
         });
         handleEvent("update_todo_result", (data: any) => {
             // use data to update your component
             console.log("update_todo_result")
             console.log(data.update_todo.id, data.update_todo.completed)
-            const updatedTodos = mounted.current.map(todo => {
+            const updatedTodos = refTodos.current.map(todo => {
                 if (todo.id === data.update_todo.id) {
                     return { ...todo, completed: data.update_todo.completed };
                 }
