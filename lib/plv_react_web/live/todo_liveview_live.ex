@@ -30,12 +30,11 @@ defmodule PlvReactWeb.TodoLiveviewLive do
     @impl true
     def handle_event("add_todo", %{"todo" => todo} = _params, socket) do
         Logger.log(:debug, "#{inspect todo}")
-        new_todo = 
+        socket = 
         case Tasks.create_todo(todo) do
-            {:ok, t} -> t
-            {:error, _} -> nil
+            {:ok, new_todo} -> assign(socket, :todos, [new_todo])
+            {:error, _} -> socket
         end
-        socket = assign(socket, :todos, [new_todo])
 
         {:noreply, socket}
     end
@@ -47,10 +46,10 @@ defmodule PlvReactWeb.TodoLiveviewLive do
         socket =
         if old_todo do
             case Tasks.update_todo(old_todo, 
-                (if Enum.member?(params, "value") and params["value"] == "true", 
+                (if Map.has_key?(params, "value") and params["value"] == "true", 
                     do: %{completed: true}, 
                     else: %{completed: false})) do
-                {:ok, t} -> assign(socket, :todos, [t])
+                {:ok, updated_todo} -> assign(socket, :todos, [updated_todo])
                 {:error, _} -> socket
             end
         else
