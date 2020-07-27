@@ -47,7 +47,7 @@ defmodule PlvReactWeb.TodoLiveviewLive do
         socket =
         if old_todo do
             case Tasks.update_todo(old_todo, 
-                (if params["value"] == "true", 
+                (if Enum.member?(params, "value") and params["value"] == "true", 
                     do: %{completed: true}, 
                     else: %{completed: false})) do
                 {:ok, t} -> assign(socket, :todos, [t])
