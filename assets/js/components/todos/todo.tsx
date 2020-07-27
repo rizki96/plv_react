@@ -70,9 +70,7 @@ const Todo: React.FC<LiveViewProps> = ({
         getTodos.map(todo => {
             if (todo === selectedTodo) {
                 pushEvent("update_todo", { ...todo, completed: !todo.completed }); // sync to server
-                return { ...todo, completed: !todo.completed };
             }
-            return todo;
         });
     };
 
