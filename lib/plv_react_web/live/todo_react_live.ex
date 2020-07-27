@@ -36,14 +36,14 @@ defmodule PlvReactWeb.TodoReactLive do
     @impl true
     def handle_event("add_todo", params, %{assigns: %{todos: _todos}} = socket) do
         Logger.log(:debug, "#{inspect params}")
-        todo = 
+        socket = 
         case Tasks.create_todo(params) do
-            {:ok, t} -> t
-            {:error, _} -> nil
+            {:ok, new_todo} -> push_event(socket, "add_todo_result", %{add_todo: new_todo})
+            {:error, _} -> socket
         end
         #Process.send_after(self(), :refresh_todos, 0)
 
-        {:noreply, socket |> push_event("add_todo_result", %{add_todo: todo})}
+        {:noreply, socket}
     end
 
     @impl true
@@ -51,16 +51,16 @@ defmodule PlvReactWeb.TodoReactLive do
         Logger.log(:debug, "#{inspect params}")
 
         old_todo = Tasks.get_todo!(params["id"])
-        todo =
+        socket =
         if old_todo do
             case Tasks.update_todo(old_todo, params) do
-                {:ok, t} -> t
-                {:error, _} -> nil
+                {:ok, updated_todo} -> push_event(socket, "update_todo_result", %{update_todo: updated_todo})
+                {:error, _} -> socket
             end
         else
-            nil
+            socket
         end
 
-        {:noreply, socket |> push_event("update_todo_result", %{update_todo: todo})}
+        {:noreply, socket}
     end
 end
