@@ -24,13 +24,14 @@ const Todo: React.FC<LiveViewProps> = ({
     const refTodos = React.useRef(todos);
     
     React.useEffect(() => {
-        if (!refTodos.current) {
+        // always renew refTodos on mount or update
+        refTodos.current = getTodos;
+
+        //if (!refTodos.current) {
             // do componentDidMount logic
-            refTodos.current = getTodos;
-        } else {
+        //} else {
             // do componentDidUpdate logic
-            refTodos.current = getTodos;
-        }
+        //}
     });
 
     React.useEffect(() => {
