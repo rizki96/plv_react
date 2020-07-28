@@ -25,8 +25,6 @@ let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("
 let liveSocket = new LiveSocket("/live", Socket, {hooks, params: {_csrf_token: csrfToken}})
 
 import Todo from './components/todos/todo'
-//import AddTodoForm from './components/todos/add_todo_form'
-//import TodoListItem from './components/todos/todo_list_item'
 
 window.Components = {
     Todo
