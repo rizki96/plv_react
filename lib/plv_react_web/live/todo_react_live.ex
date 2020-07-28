@@ -1,5 +1,5 @@
 defmodule PlvReactWeb.TodoReactLive do
-    use Phoenix.LiveView
+    use PlvReactWeb, :live_view
 
     import PhoenixLiveReact
     require Logger
@@ -21,7 +21,6 @@ defmodule PlvReactWeb.TodoReactLive do
         |> assign(name: "react_component")
         |> assign(todos: todos)
 
-        #{:ok, socket, temporary_assigns: [todos: []]}
         {:ok, socket}
     end
 
@@ -47,7 +46,7 @@ defmodule PlvReactWeb.TodoReactLive do
     end
 
     @impl true
-    def handle_event("update_todo", params, %{assigns: %{todos: todos}} = socket) do
+    def handle_event("update_todo", params, socket) do
         Logger.log(:debug, "#{inspect params}")
 
         old_todo = Tasks.get_todo!(params["id"])
